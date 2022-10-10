@@ -17,6 +17,17 @@ services:
       - "27017:27017"
     volumes:
       - ./data:/data/db
+
+  mosquitto:
+    container_name: mosquitto
+    image: eclipse-mosquitto:2.0.12
+    ports:
+      - "1883:1883"
+    volumes:
+      - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+    
 volumes:
   mongo:
+    driver: local
+  mosquitto:
     driver: local
