@@ -5,3 +5,13 @@ Content-Type: application/json
   "humidityLevel": 0.8,
   "entryDate": "2019-01-01T00:00:00.000Z"
 }
+
+####################################################################
+
+POST http://0.0.0.0:6970
+Content-Type: application/json
+
+{
+"distance": 0.8,
+"entryDate": "2019-01-01T00:00:00.000Z"
+}

@@ -10,6 +10,16 @@ services:
     environment:
       - "MONGO_HOSTNAME=mongo"
 
+  door:
+    container_name: door
+    build:
+      context: ./cmd/door
+      dockerfile: Dockerfile
+    ports:
+      - "6970:6970"
+    environment:
+      - "MONGO_HOSTNAME=mongo"
+
   mongo:
     container_name: mongo
     image: mongo:4.4.4
