@@ -35,6 +35,12 @@ services:
       - "1883:1883"
     volumes:
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  mqtt-redirect:
+    container_name: mqtt-redirect
+    build:
+      context: ./cmd/mqtt-redirect
+      dockerfile: Dockerfile
     
 volumes:
   mongo:

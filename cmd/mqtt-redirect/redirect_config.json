@@ -1,16 +1,16 @@
 {
   "broker": {
-    "host": "localhost",
+    "host": "mosquitto",
     "port": "1883"
   },
   "targets": [
     {
       "topic": "rain",
-      "addr": "localhost:6969"
+      "addr": "rain:6969"
     },
     {
         "topic": "door",
-        "addr": "localhost:6970"
+        "addr": "door:6970"
     }
   ]
 }

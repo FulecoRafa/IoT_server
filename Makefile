@@ -1,4 +1,4 @@
-docker: door rain
+docker: door rain mqtt-redirect
 	docker compose up --build -d
 
 door:
@@ -6,3 +6,6 @@ door:
 
 rain:
 	GOOS=linux GOARCH=amd64 go build -o cmd/rain/rain cmd/rain/main.go
+
+mqtt-redirect:
+	GOOS=linux GOARCH=amd64 go build -o cmd/mqtt-redirect/mqtt-redirect cmd/mqtt-redirect/main.go
