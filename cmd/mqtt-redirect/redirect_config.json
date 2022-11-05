@@ -1,0 +1,16 @@
+{
+  "broker": {
+    "host": "localhost",
+    "port": "1883"
+  },
+  "targets": [
+    {
+      "topic": "rain",
+      "addr": "localhost:6969"
+    },
+    {
+        "topic": "door",
+        "addr": "localhost:6970"
+    }
+  ]
+}

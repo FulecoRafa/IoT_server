@@ -1,4 +1,5 @@
 /data
 /cmd/rain/rain
+/cmd/door/door
 *.exe
 .vscode
