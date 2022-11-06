@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/fulecorafa/IoT_server/pkg/db"
+	"github.com/fulecorafa/IoT_server/pkg/discord"
 	"github.com/fulecorafa/IoT_server/pkg/log"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -24,6 +25,9 @@ type DoorEntry struct {
 // MongoDB connection
 var client *mongo.Client
 var collection *mongo.Collection
+
+// Global state
+var wasOpen = false
 
 func main() {
 	/* Initializing logger */
@@ -112,6 +116,18 @@ func doorHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		isOpen := entry.Distance > 10
+		if !isOpen && wasOpen {
+			wasOpen = false
+		}
+		if isOpen && !wasOpen {
+			const message = "Hey, someone is at the door! You have visitors!"
+			err := discord.SendMessage(message)
+			if err != nil {
+				log.Error(err.Error())
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
 		w.WriteHeader(http.StatusCreated)
 		_, err = w.Write([]byte(strconv.FormatBool(isOpen)))
 		if err != nil {
