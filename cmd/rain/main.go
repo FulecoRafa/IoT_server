@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/fulecorafa/IoT_server/pkg/discord"
 	"io"
 	"net/http"
 	"os"
@@ -26,6 +27,9 @@ type RainEntry struct {
 // MongoDB connection
 var client *mongo.Client
 var collection *mongo.Collection
+
+// Global state
+var wasRaining = false
 
 func main() {
 	/* Initializing logger */
@@ -114,6 +118,18 @@ func rainHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		isRaining := entry.HumidityLevel > 0.5
+		if !isRaining && wasRaining {
+			wasRaining = false
+		}
+		if isRaining && !wasRaining {
+			const message = "Hey there! My sensors are telling me that it's raining outside. I suggest you take a look at the windows!"
+
+			if err := discord.SendMessage(message); err != nil {
+				log.Error(err.Error())
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+		}
 		w.WriteHeader(http.StatusCreated)
 		_, err = w.Write([]byte(strconv.FormatBool(isRaining)))
 		if err != nil {

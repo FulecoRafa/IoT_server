@@ -1,5 +1,6 @@
 /data
 /cmd/rain/rain
 /cmd/door/door
+/cmd/mqtt-redirect/mqtt-redirect
 *.exe
 .vscode
