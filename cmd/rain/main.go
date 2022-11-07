@@ -129,6 +129,7 @@ func rainHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
+			wasRaining = true
 		}
 		w.WriteHeader(http.StatusCreated)
 		_, err = w.Write([]byte(strconv.FormatBool(isRaining)))
